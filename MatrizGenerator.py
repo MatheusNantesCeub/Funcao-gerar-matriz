@@ -11,14 +11,19 @@ def gerar_matriz():
         #faz uma matriz com a ordem requerida 
         matriz = np.zeros((linhas,colunas))
         #esse looping eh o looping das linhas
+       
         for i in range(linhas):
             #ja esse vai passar pelos elementos de cada linha
             for j in range(colunas):
                 #e com essa notacao vai substituindo os elementos nos respectivos lugares
                 #adicionei o metodo eval, que se for digitado 2/3 pelo usuario, ele vai realizar a divisao e colocar no elemento corretamente
-                matriz[i][j] = (eval(input(f"Digite o {j+1} elemento da {i+1} linha: ")))
+                try:
+                    matriz[i][j] = (eval(input(f"Digite o {j+1} elemento da {i+1} linha: ")))
+                except ZeroDivisionError:
+                    print("Você tentou inserir uma fração com 0 no denominador")
+
         print(f"A matriz gerada é \n{matriz}\n de ordem {linhas}x{colunas}") 
-        #verifica se a matriz eh quadratica
+            #verifica se a matriz eh quadratica
         if linhas == colunas:
             #calcula o determinante
             det = np.linalg.det(matriz)
@@ -30,10 +35,11 @@ def gerar_matriz():
                 print(f"O inverso da matriz é : \n{matriz_inversa}")
 
             except np.linalg.LinAlgError:
-                print(f"A matriz é singular, não possui inversa.")
+                print(f"A matriz é singular, não possui inversa, pois o determinante é igual a 0.")
         else:
             print("Matriz não quadratica, não possui determinante.")
     except ValueError:
-        print("Valor não aceito, por favor inserir o.")
+        print("Valor não aceito, por favor inserir um válido.")
 gerar_matriz()
+
 
